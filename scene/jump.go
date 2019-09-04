@@ -6,7 +6,7 @@ import "github.com/hajimehoshi/ebiten"
 type JumpScene struct {
 	Scene
 	Game GameIface
-	To int
+	To   int
 }
 
 func MakeJumpScene(game GameIface, to int) (*JumpScene, int) {

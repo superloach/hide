@@ -75,7 +75,7 @@ func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64
 	body.SetPosition(cp.Vector{x, y})
 	ce.Body = body
 
-	shape := cp.NewCircle(body, r, cp.Vector{r, -2*r})
+	shape := cp.NewCircle(body, r, cp.Vector{r, -2 * r})
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
@@ -106,7 +106,7 @@ func (s *ChipmunkScene) Draw(screen *ebiten.Image) {
 			ent.Space.AddShape(ent.Shape)
 		}
 		op.GeoM.Reset()
-		op.GeoM.Translate(ent.Body.Position().X - ent.Width / 2, ent.Body.Position().Y - ent.Height / 2)
+		op.GeoM.Translate(ent.Body.Position().X-ent.Width/2, ent.Body.Position().Y-ent.Height/2)
 		screen.DrawImage(ent.Sprite, op)
 	}
 
