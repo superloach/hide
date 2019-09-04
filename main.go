@@ -24,16 +24,23 @@ func main() {
 	mario1, m1id := scene.MakeImageScene(hide, images.FileImage("./images/mario.png"))
 	mario1.Caption = "mario.png\npress <- to return to the menu"
 	mario1.Next = -1
+
 	menu.AddOption("mario file version", m1id)
 
 	mario2, m2id := scene.MakeImageScene(hide, mario)
 	mario2.Caption += "images.MarioPng\npress <- to return to the menu"
 	mario2.Next = -1
+
 	menu.AddOption("mario f2bs version", m2id)
 
 	mario3, m3id := scene.MakeChipmunkScene(hide)
-	_ = mario3.MakeCirc(ball, float64(hide.Width()) / 2, float64(hide.Height()) / 2, 100)
-	_ = mario3.MakeRect(mario, float64(hide.Width()) / 2, float64(hide.Height()), cp.INFINITY)
+
+	mobj := mario3.MakeRect(mario, 100, 400, cp.INFINITY)
+	mobj.Shape.SetElasticity(0.2);
+
+	bobj := mario3.MakeCirc(ball, 120, 0, 10)
+	bobj.Shape.SetElasticity(3);
+
 	menu.AddOption("mario chipmunk demo", m3id)
 
 	hide.Run()

@@ -22,15 +22,14 @@ type ChipmunkScene struct {
 	Scene
 	Game    GameI
 	Space   *cp.Space
-	Gravity cp.Vector
-	Damping float64
+	Gravity float64
 	Ents    []*ChipEnt
 }
 
 func MakeChipmunkScene(game GameI) (*ChipmunkScene, int) {
 	s := ChipmunkScene{}
 	s.Game = game
-	s.Gravity = cp.Vector{0, 100}
+	s.Gravity = 333
 	id := s.Game.AddScene(&s)
 	return &s, id
 }
@@ -45,7 +44,7 @@ func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64
 
 	moment := cp.MomentForBox(mass, w, h)
 	body := cp.NewBody(mass, moment)
-	body.SetPosition(cp.Vector{x - w / 2.0, y - h / 2.0})
+	body.SetPosition(cp.Vector{x, y})
 	ce.Body = body
 
 	shape := cp.NewBox(body, w, h, 0)
@@ -66,10 +65,10 @@ func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64
 
 	moment := cp.MomentForCircle(mass, 0, r, cp.Vector{})
 	body := cp.NewBody(mass, moment)
-	body.SetPosition(cp.Vector{x - r, y - r})
+	body.SetPosition(cp.Vector{x, y})
 	ce.Body = body
 
-	shape := cp.NewCircle(body, r, cp.Vector{})
+	shape := cp.NewCircle(body, r, cp.Vector{0, -r})
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
@@ -79,8 +78,8 @@ func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64
 func (s *ChipmunkScene) Step() {
 	if s.Space == nil {
 		s.Space = cp.NewSpace()
-		s.Space.Iterations = 1
-		s.Space.SetGravity(s.Gravity)
+		s.Space.Iterations = 2
+		s.Space.SetGravity(cp.Vector{0, s.Gravity})
 	}
 
 	s.Space.Step(1.0 / float64(ebiten.MaxTPS()))
