@@ -1,8 +1,8 @@
-package scene;
+package scene
 
-import "github.com/hajimehoshi/ebiten";
+import "github.com/hajimehoshi/ebiten"
 
 // generic scene
 type Scene interface {
-	Update(*ebiten.Image);
+	Update(*ebiten.Image)
 }

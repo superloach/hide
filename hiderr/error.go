@@ -1,19 +1,19 @@
-package hiderr;
+package hiderr
 
-import "os";
-import "errors";
+import "os"
+import "errors"
 
 func Do(err error) {
 	if err != nil {
-		panic(err);
+		panic(err)
 	}
 }
 
 func Msg(msg string) {
-	Do(errors.New(msg));
+	Do(errors.New(msg))
 }
 
 func Quit() {
-	println("bye-bye :)");
-	os.Exit(0);
+	println("bye-bye :)")
+	os.Exit(0)
 }
