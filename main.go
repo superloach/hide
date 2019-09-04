@@ -2,9 +2,9 @@ package main
 
 import "time"
 
-import "hide/game"
-import "hide/scene"
-import "hide/images"
+import "github.com/superloach/hide/game"
+import "github.com/superloach/hide/scene"
+import "github.com/superloach/hide/images"
 
 import "github.com/jakecoffman/cp"
 

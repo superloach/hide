@@ -1,7 +1,7 @@
 package game
 
-import "hide/hiderr"
-import "hide/scene"
+import "github.com/superloach/hide/hiderr"
+import "github.com/superloach/hide/scene"
 
 import "github.com/hajimehoshi/ebiten"
 import "github.com/hajimehoshi/ebiten/inpututil"

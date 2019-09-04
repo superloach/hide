@@ -4,7 +4,7 @@ import "bytes"
 import "image"
 import "io/ioutil"
 
-import "hide/hiderr"
+import "github.com/superloach/hide/hiderr"
 
 import "github.com/hajimehoshi/ebiten"
 

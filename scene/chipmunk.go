@@ -3,7 +3,7 @@ package scene
 import "fmt"
 import "image/color"
 
-import "hide/hiderr"
+import "github.com/superloach/hide/hiderr"
 
 import "github.com/hajimehoshi/ebiten"
 import "github.com/hajimehoshi/ebiten/ebitenutil"
