@@ -1,10 +1,6 @@
 package scene
 
-import "bytes"
-import "image"
 import "image/color"
-
-import "hide/hiderr"
 
 import "github.com/hajimehoshi/ebiten"
 import "github.com/hajimehoshi/ebiten/ebitenutil"
@@ -19,15 +15,12 @@ type ImageScene struct {
 	Caption string
 }
 
-func MakeImageScene(game GameI, imageBytes []byte) (*ImageScene, int) {
+func MakeImageScene(game GameI, image *ebiten.Image) (*ImageScene, int) {
 	s := ImageScene{}
 	s.Game = game
 	s.Next = ebiten.KeyRight
 	s.Back = ebiten.KeyLeft
-
-	img, _, err := image.Decode(bytes.NewReader(imageBytes))
-	hiderr.Do(err)
-	s.Image, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+	s.Image = image
 
 	id := s.Game.AddScene(&s)
 

@@ -47,6 +47,7 @@ func (s *MenuScene) Keys() {
 		s.Cursor += 1
 		s.Cursor %= len(s.Options)
 	} else if inpututil.IsKeyJustPressed(s.Back) {
+		s.Cursor += len(s.Options)
 		s.Cursor -= 1
 		s.Cursor %= len(s.Options)
 	} else if inpututil.IsKeyJustPressed(s.Confirm) {
