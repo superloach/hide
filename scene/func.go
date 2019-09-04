@@ -5,11 +5,11 @@ import "github.com/hajimehoshi/ebiten"
 // function runner scene
 type FuncScene struct {
 	Scene
-	Game GameI
+	Game GameIface
 	Func func(Scene)
 }
 
-func MakeFuncScene(game GameI, funct func(Scene)) (*FuncScene, int) {
+func MakeFuncScene(game GameIface, funct func(Scene)) (*FuncScene, int) {
 	s := FuncScene{}
 	s.Func = funct
 	id := s.Game.AddScene(&s)

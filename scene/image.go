@@ -8,14 +8,14 @@ import "github.com/hajimehoshi/ebiten/inpututil"
 
 // image viewer scene
 type ImageScene struct {
-	Game    GameI
+	Game    GameIface
 	Image   *ebiten.Image
 	Next    ebiten.Key
 	Back    ebiten.Key
 	Caption string
 }
 
-func MakeImageScene(game GameI, image *ebiten.Image) (*ImageScene, int) {
+func MakeImageScene(game GameIface, image *ebiten.Image) (*ImageScene, int) {
 	s := ImageScene{}
 	s.Game = game
 	s.Next = ebiten.KeyRight

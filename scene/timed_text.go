@@ -11,13 +11,13 @@ import "github.com/hajimehoshi/ebiten/ebitenutil"
 // text example scene
 type TimedTextScene struct {
 	Scene
-	Game  GameI
+	Game  GameIface
 	Text  string
 	Until time.Time
 	Wait  time.Duration
 }
 
-func MakeTimedTextScene(game GameI, text string, wait time.Duration) (*TimedTextScene, int) {
+func MakeTimedTextScene(game GameIface, text string, wait time.Duration) (*TimedTextScene, int) {
 	s := TimedTextScene{}
 	s.Game = game
 	s.Text = text

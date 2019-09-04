@@ -5,11 +5,11 @@ import "github.com/hajimehoshi/ebiten"
 // function runner scene
 type JumpScene struct {
 	Scene
-	Game GameI
+	Game GameIface
 	To int
 }
 
-func MakeJumpScene(game GameI, to int) (*JumpScene, int) {
+func MakeJumpScene(game GameIface, to int) (*JumpScene, int) {
 	s := JumpScene{}
 	s.To = to
 	id := s.Game.AddScene(&s)

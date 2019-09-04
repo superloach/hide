@@ -23,13 +23,13 @@ type ChipEnt struct {
 // chipmunk physics scene
 type ChipmunkScene struct {
 	Scene
-	Game    GameI
+	Game    GameIface
 	Space   *cp.Space
 	Gravity float64
 	Ents    []*ChipEnt
 }
 
-func MakeChipmunkScene(game GameI) (*ChipmunkScene, int) {
+func MakeChipmunkScene(game GameIface) (*ChipmunkScene, int) {
 	s := ChipmunkScene{}
 	s.Game = game
 	s.Gravity = 333

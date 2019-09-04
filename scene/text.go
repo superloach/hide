@@ -9,13 +9,13 @@ import "github.com/hajimehoshi/ebiten/inpututil"
 // text example scene
 type TextScene struct {
 	Scene
-	Game GameI
+	Game GameIface
 	Text string
 	Next ebiten.Key
 	Back ebiten.Key
 }
 
-func MakeTextScene(game GameI, text string) (*TextScene, int) {
+func MakeTextScene(game GameIface, text string) (*TextScene, int) {
 	s := TextScene{}
 	s.Game = game
 	s.Text = text

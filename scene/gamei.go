@@ -2,7 +2,7 @@ package scene
 
 import "github.com/hajimehoshi/ebiten"
 
-type GameI interface {
+type GameIface interface {
 	Width() int
 	Height() int
 	Scene() Scene

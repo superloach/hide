@@ -13,7 +13,7 @@ type MenuOption struct {
 
 // option menu scene
 type MenuScene struct {
-	Game    GameI
+	Game    GameIface
 	Title   string
 	Options []MenuOption
 	Cursor  int
@@ -23,7 +23,7 @@ type MenuScene struct {
 	Exit    ebiten.Key
 }
 
-func MakeMenuScene(game GameI, title string) (*MenuScene, int) {
+func MakeMenuScene(game GameIface, title string) (*MenuScene, int) {
 	s := MenuScene{}
 	s.Game = game
 	s.Title = title
