@@ -1,10 +1,6 @@
 package scene
 
-import "image/color"
-
 import "github.com/hajimehoshi/ebiten"
-import "github.com/hajimehoshi/ebiten/ebitenutil"
-import "github.com/hajimehoshi/ebiten/inpututil"
 
 // function runner scene
 type FuncScene struct {

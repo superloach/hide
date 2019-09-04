@@ -35,11 +35,13 @@ func main() {
 
 	mario3, m3id := scene.MakeChipmunkScene(hide)
 
-	mobj := mario3.MakeRect(mario, 100, 400, cp.INFINITY)
-	mobj.Shape.SetElasticity(0.2);
+	mobj := mario3.MakeRect(mario, 100, 480 - 128, cp.INFINITY)
+	mobj.Shape.SetElasticity(0);
 
-	bobj := mario3.MakeCirc(ball, 120, 0, 10)
-	bobj.Shape.SetElasticity(3);
+	for i := 0.0; i < 4; i++ {
+		bobj := mario3.MakeCirc(ball, 100 + 16 * i, 0 + 32 * i, 10)
+		bobj.Shape.SetElasticity(0);
+	}
 
 	menu.AddOption("mario chipmunk demo", m3id)
 

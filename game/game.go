@@ -1,7 +1,5 @@
 package game
 
-import "errors"
-
 import "hide/hiderr"
 import "hide/scene"
 
@@ -39,15 +37,14 @@ func (g *Game) Height() int { return g.height }
 
 func (g *Game) Scene() scene.Scene {
 	if len(g.scenes) == 0 {
-		s, _ := scene.MakeTextScene(g, "no scenes :(")
-		g.AddScene(s)
+		hiderr.Msg("no scenes :(")
 	}
 	return g.scenes[g.curScene]
 }
 
 func (g *Game) GoScene(id int) {
 	if id >= len(g.scenes) {
-		hiderr.Do(errors.New("index out of bounds"))
+		hiderr.Msg("index out of bounds")
 	}
 	g.curScene = id
 	g.sceneStack = append(g.sceneStack, id)

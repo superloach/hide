@@ -7,14 +7,17 @@ import "hide/hiderr"
 
 import "github.com/hajimehoshi/ebiten"
 import "github.com/hajimehoshi/ebiten/ebitenutil"
-//import "github.com/hajimehoshi/ebiten/inpututil"
 import "github.com/jakecoffman/cp"
 
 type ChipEnt struct {
-	Space  *cp.Space
-	Sprite *ebiten.Image
-	Body   *cp.Body
-	Shape  *cp.Shape
+	Name    string
+	Space   *cp.Space
+	Sprite  *ebiten.Image
+	Width   float64
+	Height  float64
+	Body    *cp.Body
+	Shape   *cp.Shape
+	Collide func(*ChipEnt)
 }
 
 // chipmunk physics scene
@@ -39,15 +42,15 @@ func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64
 	ce.Sprite = image
 
 	ow, oh := ce.Sprite.Size()
-	w := float64(ow)
-	h := float64(oh)
+	ce.Width = float64(ow)
+	ce.Height = float64(oh)
 
-	moment := cp.MomentForBox(mass, w, h)
+	moment := cp.MomentForBox(mass, ce.Width, ce.Height)
 	body := cp.NewBody(mass, moment)
 	body.SetPosition(cp.Vector{x, y})
 	ce.Body = body
 
-	shape := cp.NewBox(body, w, h, 0)
+	shape := cp.NewBox(body, ce.Width, ce.Height, 0)
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
@@ -59,16 +62,20 @@ func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64
 	ce.Sprite = image
 
 	ow, oh := ce.Sprite.Size()
-	if ow != oh { hiderr.Msg("not a square sprite") }
+	if ow != oh {
+		hiderr.Msg("not a square sprite")
+	}
 
-	r := float64(ow) / 2
+	ce.Width = float64(ow)
+	ce.Height = float64(oh)
+	r := ce.Width / 2
 
 	moment := cp.MomentForCircle(mass, 0, r, cp.Vector{})
 	body := cp.NewBody(mass, moment)
 	body.SetPosition(cp.Vector{x, y})
 	ce.Body = body
 
-	shape := cp.NewCircle(body, r, cp.Vector{0, -r})
+	shape := cp.NewCircle(body, r, cp.Vector{r, -2*r})
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
@@ -99,7 +106,7 @@ func (s *ChipmunkScene) Draw(screen *ebiten.Image) {
 			ent.Space.AddShape(ent.Shape)
 		}
 		op.GeoM.Reset()
-		op.GeoM.Translate(ent.Body.Position().X, ent.Body.Position().Y)
+		op.GeoM.Translate(ent.Body.Position().X - ent.Width / 2, ent.Body.Position().Y - ent.Height / 2)
 		screen.DrawImage(ent.Sprite, op)
 	}
 
