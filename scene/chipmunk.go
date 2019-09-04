@@ -1,8 +1,6 @@
 package scene
 
 import "fmt"
-import "image"
-import "bytes"
 import "image/color"
 
 import "hide/hiderr"
@@ -37,7 +35,7 @@ func MakeChipmunkScene(game GameI) (*ChipmunkScene, int) {
 	return &s, id
 }
 
-func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64) {
+func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64) *ChipEnt {
 	ce := ChipEnt{}
 	ce.Sprite = image
 
@@ -54,6 +52,28 @@ func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
+	return &ce
+}
+
+func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64) *ChipEnt {
+	ce := ChipEnt{}
+	ce.Sprite = image
+
+	ow, oh := ce.Sprite.Size()
+	if ow != oh { hiderr.Msg("not a square sprite") }
+
+	r := float64(ow) / 2
+
+	moment := cp.MomentForCircle(mass, 0, r, cp.Vector{})
+	body := cp.NewBody(mass, moment)
+	body.SetPosition(cp.Vector{x - r, y - r})
+	ce.Body = body
+
+	shape := cp.NewCircle(body, r, cp.Vector{})
+	ce.Shape = shape
+
+	s.Ents = append(s.Ents, &ce)
+	return &ce
 }
 
 func (s *ChipmunkScene) Step() {

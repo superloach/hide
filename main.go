@@ -19,6 +19,7 @@ func main() {
 	menu, _ := scene.MakeMenuScene(hide, "mario menu")
 
 	mario := images.ByteImage(images.MarioPng)
+	ball := images.ByteImage(images.BallPng)
 
 	mario1, m1id := scene.MakeImageScene(hide, images.FileImage("./images/mario.png"))
 	mario1.Caption = "mario.png\npress <- to return to the menu"
@@ -31,8 +32,8 @@ func main() {
 	menu.AddOption("mario f2bs version", m2id)
 
 	mario3, m3id := scene.MakeChipmunkScene(hide)
-	mario3.MakeRect(mario, float64(hide.Width()) / 2, float64(hide.Height()) / 2, 100)
-	mario3.MakeRect(mario, float64(hide.Width()) / 2, float64(hide.Height()), cp.INFINITY)
+	_ = mario3.MakeCirc(ball, float64(hide.Width()) / 2, float64(hide.Height()) / 2, 100)
+	_ = mario3.MakeRect(mario, float64(hide.Width()) / 2, float64(hide.Height()), cp.INFINITY)
 	menu.AddOption("mario chipmunk demo", m3id)
 
 	hide.Run()
