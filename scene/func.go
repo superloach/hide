@@ -6,10 +6,10 @@ import "github.com/hajimehoshi/ebiten"
 type FuncScene struct {
 	Scene
 	Game GameI
-	Func func(GameI)
+	Func func(Scene)
 }
 
-func MakeFuncScene(game GameI, funct func(GameI)) (*FuncScene, int) {
+func MakeFuncScene(game GameI, funct func(Scene)) (*FuncScene, int) {
 	s := FuncScene{}
 	s.Func = funct
 	id := s.Game.AddScene(&s)
@@ -17,6 +17,6 @@ func MakeFuncScene(game GameI, funct func(GameI)) (*FuncScene, int) {
 }
 
 func (s *FuncScene) Update(screen *ebiten.Image) {
-	s.Func(s.Game)
+	s.Func(s)
 	s.Game.RelScene(+1)
 }
