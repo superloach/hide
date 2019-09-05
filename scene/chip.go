@@ -28,8 +28,8 @@ type ChipScene struct {
 	Ents    []*ChipEnt
 }
 
-func MakeChipmunkScene(game GameIface) (*ChipmunkScene, int) {
-	s := ChipmunkScene{}
+func MakeChipScene(game GameIface) (*ChipScene, int) {
+	s := ChipScene{}
 	s.Game = game
 	s.Space = cp.NewSpace()
 	s.Space.Iterations = 1
@@ -39,7 +39,7 @@ func MakeChipmunkScene(game GameIface) (*ChipmunkScene, int) {
 	return &s, id
 }
 
-func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64) *ChipEnt {
+func (s *ChipScene) MakeRect(image *ebiten.Image, x, y float64, mass float64) *ChipEnt {
 	ce := ChipEnt{}
 	ce.Sprite = image
 
@@ -52,14 +52,15 @@ func (s *ChipmunkScene) MakeRect(image *ebiten.Image, x, y float64, mass float64
 	body.SetPosition(cp.Vector{x, y})
 	ce.Body = body
 
-	shape := cp.NewBox(body, ce.Width, ce.Height, 0)
+	shape := cp.NewBox(body, ce.Width, ce.Height, -1)
+	shape.SetElasticity(0.5)
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
 	return &ce
 }
 
-func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64) *ChipEnt {
+func (s *ChipScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64) *ChipEnt {
 	ce := ChipEnt{}
 	ce.Sprite = image
 
@@ -78,19 +79,20 @@ func (s *ChipmunkScene) MakeCirc(image *ebiten.Image, x, y float64, mass float64
 	ce.Body = body
 
 	shape := cp.NewCircle(body, r, cp.Vector{0, 0})
+	shape.SetElasticity(0.7)
 	ce.Shape = shape
 
 	s.Ents = append(s.Ents, &ce)
 	return &ce
 }
 
-func (s *ChipmunkScene) Step() {
+func (s *ChipScene) Step() {
 	s.Space.Step(1.0 / float64(ebiten.MaxTPS()))
 }
 
-func (s *ChipmunkScene) Keys() {}
+func (s *ChipScene) Keys() {}
 
-func (s *ChipmunkScene) Draw(screen *ebiten.Image) {
+func (s *ChipScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
 
 	op := &ebiten.DrawImageOptions{}
@@ -109,7 +111,7 @@ func (s *ChipmunkScene) Draw(screen *ebiten.Image) {
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %0.2f", ebiten.CurrentTPS()))
 }
 
-func (s *ChipmunkScene) Update(screen *ebiten.Image) {
+func (s *ChipScene) Update(screen *ebiten.Image) {
 	s.Step()
 	s.Keys()
 	if !ebiten.IsDrawingSkipped() {

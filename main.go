@@ -33,14 +33,14 @@ func main() {
 
 	menu.AddOption("mario f2bs version", m2id)
 
-	mario3, m3id := scene.MakeChipmunkScene(hide)
+	mario3, m3id := scene.MakeChipScene(hide)
 
-	mobj := mario3.MakeRect(mario, 100, 480-128, cp.INFINITY)
-	mobj.Shape.SetElasticity(0)
+	_ = mario3.MakeRect(mario, 100, 480-128, cp.INFINITY)
 
-	for i := 0.0; i < 4; i++ {
-		bobj := mario3.MakeCirc(ball, 100+16*i, 0+32*i, 10)
-		bobj.Shape.SetElasticity(0)
+	var count float64 = 32
+	var i float64
+	for i = 0; i < count; i++ {
+		_ = mario3.MakeCirc(ball, 100+8*float64(int(i)%4), 0+8*i, 10)
 	}
 
 	menu.AddOption("mario chipmunk demo", m3id)
