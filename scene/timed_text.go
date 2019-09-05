@@ -11,10 +11,9 @@ import "github.com/hajimehoshi/ebiten/ebitenutil"
 // text example scene
 type TimedTextScene struct {
 	Scene
-	Game  GameIface
-	Text  string
-	Until time.Time
-	Wait  time.Duration
+	Game GameIface
+	Text string
+	Wait time.Duration
 }
 
 func MakeTimedTextScene(game GameIface, text string, wait time.Duration) (*TimedTextScene, int) {
@@ -27,17 +26,15 @@ func MakeTimedTextScene(game GameIface, text string, wait time.Duration) (*Timed
 }
 
 func (s *TimedTextScene) Step() {
-	if s.Until.IsZero() {
-		s.Until = time.Now().Add(s.Wait)
-	} else if time.Now().After(s.Until) {
+	s.Wait -= time.Duration(float64(time.Second) / float64(ebiten.MaxTPS()))
+	if s.Wait <= 0 {
 		s.Game.RelScene(+1)
-		s.Until = time.Time{}
 	}
 }
 
 func (s *TimedTextScene) Draw(screen *ebiten.Image) {
 	screen.Fill(color.Black)
-	left := (s.Until.Sub(time.Now()) + (time.Second / 2)).Round(time.Second)
+	left := (s.Wait + time.Second/2).Round(time.Second)
 	ebitenutil.DebugPrint(screen, s.Text+"\n("+left.String()+")")
 }
 
