@@ -6,10 +6,8 @@ import "github.com/superloach/hide/game"
 import "github.com/superloach/hide/scene"
 import "github.com/superloach/hide/images"
 
-import "github.com/jakecoffman/cp"
-
 func main() {
-	hide := game.MakeGame("HIDE", 600, 480)
+	hide := game.MakeGame("HIDE", 640, 480)
 
 	_, _ = scene.MakeTimedTextScene(hide, "welcome to the HIDE demo!\nthis should go away after 3 seconds", time.Second*3)
 
@@ -18,10 +16,9 @@ func main() {
 
 	menu, _ := scene.MakeMenuScene(hide, "mario menu")
 
-	mario := images.ByteImage(images.MarioPng)
-	ball := images.ByteImage(images.BallPng)
+	mario := images.Image("mario.png")
 
-	mario1, m1id := scene.MakeImageScene(hide, images.FileImage("./images/mario.png"))
+	mario1, m1id := scene.MakeImageScene(hide, mario)
 	mario1.Caption = "mario.png\npress <- to return to the menu"
 	mario1.Next = -1
 
@@ -32,18 +29,6 @@ func main() {
 	mario2.Next = -1
 
 	menu.AddOption("mario f2bs version", m2id)
-
-	mario3, m3id := scene.MakeChipScene(hide)
-
-	_ = mario3.MakeRect(mario, 100, 480-128, cp.INFINITY)
-
-	var count float64 = 32
-	var i float64
-	for i = 0; i < count; i++ {
-		_ = mario3.MakeCirc(ball, 100+8*float64(int(i)%4), 0+8*i, 10)
-	}
-
-	menu.AddOption("mario chipmunk demo", m3id)
 
 	hide.Run()
 }

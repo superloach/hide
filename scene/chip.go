@@ -23,9 +23,9 @@ type ChipEnt struct {
 // chipmunk physics scene
 type ChipScene struct {
 	Scene
-	Game    GameIface
-	Space   *cp.Space
-	Ents    []*ChipEnt
+	Game  GameIface
+	Space *cp.Space
+	Ents  []*ChipEnt
 }
 
 func MakeChipScene(game GameIface) (*ChipScene, int) {

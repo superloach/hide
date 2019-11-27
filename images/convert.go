@@ -1,11 +1,11 @@
 package images
 
-import "bytes"
 import "image"
-import "io/ioutil"
+import "bytes"
 
 import "github.com/superloach/hide/hiderr"
 
+import "github.com/gobuffalo/packr"
 import "github.com/hajimehoshi/ebiten"
 
 func ByteImage(imageBytes []byte) *ebiten.Image {
@@ -15,8 +15,8 @@ func ByteImage(imageBytes []byte) *ebiten.Image {
 	return image
 }
 
-func FileImage(filename string) *ebiten.Image {
-	dat, err := ioutil.ReadFile(filename)
+func Image(name string) *ebiten.Image {
+	dat, err := packr.NewBox(".").Find(name)
 	hiderr.Do(err)
 	return ByteImage([]byte(dat))
 }
