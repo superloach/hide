@@ -2,13 +2,20 @@ package main
 
 import (
 	"github.com/superloach/hide"
-	"github.com/superloach/hide/util"
+	"github.com/superloach/hide/easy"
 )
 
 func main() {
-	h := hide.MkHide()
-	err := h.Run()
-	if err != nil && err != util.Exit {
+	h, err := hide.MkHide()
+	if err != nil {
+		panic(err)
+	}
+
+	err = h.Run()
+	h.State.Save()
+	if err == easy.Exit || err == nil {
+		println("bye-bye")
+	} else if err != nil {
 		panic(err)
 	}
 }
